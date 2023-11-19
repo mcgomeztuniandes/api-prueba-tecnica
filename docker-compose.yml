@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  supermarket_db:
+    container_name: supermarket_db
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: supermarket
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - supermarket_db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  supermarket_db:
